@@ -1,8 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client 
 import os
 
+account_sid = os.environ['account_sid_']
+auth_token = os.environ['auth_token_']
+client = Client(account_sid, auth_token) 
 
 app = Flask(__name__)
 
@@ -12,9 +15,8 @@ def main():
 
 @app.route('/sms', methods=['POST', 'GET'])
 def sms_reply():
-    account_sid = os.environ['account_sid_']
-    auth_token = os.environ['auth_token_']
-    client = Client(account_sid, auth_token) 
+    
+    
     # fetching incoming message
     #msg = request.form.get('Body')
 
@@ -32,6 +34,15 @@ def sms_reply():
  
     print(message.sid)
     return message.sid
+
+@app.route('/users')
+def get_users():
+    to = []
+    for msgs in client.messages.list():
+        if("Join" in msgs.body):
+            to.append(msgs.from_[10:])
+            print(msgs.from_)
+    return jsonify(to)
 
 if __name__ == '__main__':
     app.run(debug=True)
