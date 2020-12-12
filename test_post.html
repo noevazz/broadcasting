@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TESTS</title>
 </head>
 <body>
+    <h2>Heroku</h2>
     <form  action="https://apibroadcasting.herokuapp.com/sms" method="POST">
+
         <label for="msg">Enviar a</label>
         <input type="text"  name="msg" value="Hola este es un test">
         <br>        
@@ -15,5 +17,32 @@
         <br>
         <button type="submit">Enviar mensaje</button>
     </form>
+    <br>
+
+    <h2>Local directo</h2>
+    <form  action="http://localhost:5000/sms" method="POST">
+        <label for="msg_type">Tipo de mensaje</label>
+        <br>
+        <label for="msg">Enviar a</label>
+        <input type="text"  name="msg" value="Hola este es un test">
+        <br>        
+        <label for="to_phone_number">Enviar a</label>
+        <input type="number"  name="to_phone_number" value="5213121502004">
+        <br>
+        <button type="submit">Enviar mensaje</button>
+    </form>
+    <br>
+
+    <h2>Local broadcast</h2>
+    <form  action="http://localhost:5000/sms?msg_type=broadcast" method="POST">
+        <label for="msg_type">Tipo de mensaje</label>
+        <input type="text"  name="msg_type" value="broadcast">
+        <br>
+        <label for="msg">Mensaje</label>
+        <input type="text"  name="msg" value="Hola este es un test tipo broadcast">
+        <br>        
+        <button type="submit">Enviar mensaje</button>
+    </form>
+    
 </body>
 </html>
