@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client 
 import os
@@ -34,7 +34,8 @@ def sms_reply():
         print(msg_from_post, to_phone_number)
         message = client.messages.create(to=f'whatsapp:+{to_phone_number}', from_='whatsapp:+14155238886', body=msg_from_post ) 
         print(message.sid)
-        return message.sid
+        status_code = Response(status=201)
+        return status_code
 
     elif msg_type=="broadcast":
         to = []
@@ -47,8 +48,9 @@ def sms_reply():
         print(to)
         for number in to:
             client.messages.create(to=f'whatsapp:+{number}', from_='whatsapp:+14155238886', body=msg_from_post )
-        return "Mensaje enviado a todos"
-
+        status_code = Response(status=201)
+        return status_code
+    
 @app.route('/users')
 def get_users():
     to = []
